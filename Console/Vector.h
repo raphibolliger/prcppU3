@@ -19,6 +19,8 @@ template<class T, size_t S> class Vector : public array<T, S> {
 		for (size_t i = 0; i < s; i++) this->at(i) = *it++;
 	}
 
+
+
 	friend ostream& operator<<(ostream& os, const Vector& v)
 	{
 		os << "[";
