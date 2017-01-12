@@ -1,23 +1,26 @@
 // Console.cpp : Definiert den Einstiegspunkt für die Konsolenanwendung.
-//
 
-#include "stdafx.h"
+#include "Expression.h"
 #include "Vector.h"
-
 
 int main()
 {
 
-	Vector<int, 4> A({1, 2, 3, 4});
-	cout << A;
-
+	Vector<double, 4> A({ 1, 2, 3, 4 });
 	Vector<double, 4> B({ 2, 1, 0, 1 });
-	cout << B;
-
+	Vector<double, 4> D;
 	auto e = (A - B) * (A + B);
+	D = e;
+	cout << D << endl; // [-3,3,9,15]
+	B = { 3, 0, 2, 5 };
+	cout << e << endl; // [-8,4,5,-9]
+	B = { 4, 3, 3, -2 };
+	cout << e[1] << endl; // -5
 
-	Vector<int, 0> D;
-	cout << D;
+	auto t1 = A*A;
+	auto t2 = B;
+
+	//cout << boolalpha << (t1 == t2) << endl;
 
     return 0;
 }

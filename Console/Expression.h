@@ -1,5 +1,10 @@
 #pragma once
 
+#include "Op.h"
+#include <ostream>
+
+using namespace std;
+
 template<typename Left, typename Op, typename Right> class Expression {
 
 	const Left& m_left;
@@ -17,48 +22,46 @@ public:
 		return Op::apply<value_type>(m_left[i], m_right[i]);
 	}
 
-	template<typename Left, typename Right>
-	Expression<Left, Add, Right> operator+(const Left& l, const Right& r) {
-		return Expression<Left, Add, Right>(l, r);
+	bool operator==(const Expression<Left, Op, Right> expression) {
+		
+		for (size_t i = 0; i < size(); i++)
+		{
+			if (this->operator[](i) != expression[i]) return false;
+		}
+		return true;
+
 	}
 
-	template<typename Left, typename Right>
-	Expression<Left, Sub, Right> operator-(const Left& l, const Right& r) {
-		return Expression<Left, Sub, Right>(l, r);
-	}
-
-	template<typename Left, typename Right>
-	Expression<Left, Mul, Right> operator*(const Left& l, const Right& r) {
-		return Expression<Left, Mul, Right>(l, r);
-	}
-
-	template<typename Left, typename Right>
-	Expression<Left, Div, Right> operator/(const Left& l, const Right& r) {
-		return Expression<Left, Div, Right>(l, r);
+	friend ostream& operator<<(ostream& os, const Expression& e)
+	{
+		os << "[";
+		for (size_t i = 0; i < e.size(); i++)
+		{
+			if (i != 0) os << ",";
+			os << e[i];
+		}
+		os << "]" << endl;
+		return os;
 	}
 
 };
 
-struct Add {
-	template<typename T> static T apply(T l, T r) {
-		return l + r;
-	}
-};
+template<typename Left, typename Right>
+Expression<Left, Add, Right> operator+(const Left& l, const Right& r) {
+	return Expression<Left, Add, Right>(l, r);
+}
 
-struct Sub {
-	template<typename T> static T apply(T l, T r) {
-		return l - r;
-	}
-};
+template<typename Left, typename Right>
+Expression<Left, Sub, Right> operator-(const Left& l, const Right& r) {
+	return Expression<Left, Sub, Right>(l, r);
+}
 
-struct Mul {
-	template<typename T> static T apply(T l, T r) {
-		return l * r;
-	}
-};
+template<typename Left, typename Right>
+Expression<Left, Mul, Right> operator*(const Left& l, const Right& r) {
+	return Expression<Left, Mul, Right>(l, r);
+}
 
-struct Div {
-	template<typename T> static T apply(T l, T r) {
-		return l / r;
-	}
-};
+template<typename Left, typename Right>
+Expression<Left, Div, Right> operator/(const Left& l, const Right& r) {
+	return Expression<Left, Div, Right>(l, r);
+}
