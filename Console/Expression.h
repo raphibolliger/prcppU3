@@ -5,6 +5,8 @@
 
 using namespace std;
 
+template<typename T, size_t S> class Vector;
+
 template<typename Left, typename Op, typename Right> class Expression {
 
 	const Left& m_left;
@@ -22,7 +24,8 @@ public:
 		return Op::apply<value_type>(m_left[i], m_right[i]);
 	}
 
-	bool operator==(const Expression<Left, Op, Right> expression) {
+	template<typename Left1, typename Op1, typename Right1>
+	bool operator==(const Expression<Left1, Op1, Right1>& expression) {
 		
 		for (size_t i = 0; i < size(); i++)
 		{
@@ -30,6 +33,15 @@ public:
 		}
 		return true;
 
+	}
+
+	template<typename T, size_t S>
+	bool operator==(const Vector<T, S>& vector) {
+		for (size_t i = 0; i < S; i++)
+		{
+			if (vector.at(i) != this->operator[](i)) return false;
+		}
+		return true;
 	}
 
 	friend ostream& operator<<(ostream& os, const Expression& e)

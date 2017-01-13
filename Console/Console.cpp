@@ -8,6 +8,7 @@ int main()
 
 	Vector<double, 4> A({ 1, 2, 3, 4 });
 	Vector<double, 4> B({ 2, 1, 0, 1 });
+	Vector<double, 5> C({ 2, 6, 12, 20, 30 });
 	Vector<double, 4> D;
 	auto e = (A - B) * (A + B);
 	D = e;
@@ -20,7 +21,12 @@ int main()
 	auto t1 = A*A;
 	auto t2 = B;
 
-	//cout << boolalpha << (t1 == t2) << endl;
+	cout << boolalpha << (t1 == t2) << endl;
+
+	auto t3 = B*C / A;
+	auto t4 = B / A*C;
+
+	cout << boolalpha << (t3 == t4) << endl;
 
     return 0;
 }

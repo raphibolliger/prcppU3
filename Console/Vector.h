@@ -20,9 +20,13 @@ template<typename T, size_t S> class Vector : public array<T, S> {
 		for (size_t i = 0; i < s; i++) this->at(i) = *it++;
 	}
 
+	bool operator==(const Vector& vector)
+	{
+		return false;
+	}
+
 	template<typename Left, typename Op, typename Right>
 	bool operator==(const Expression<Left, Op, Right>& expression) {
-		
 		for (size_t i = 0; i < S; i++)
 		{
 			if (this->at(i) != expression[i]) return false;
